@@ -1,0 +1,27 @@
+from datetime import datetime
+import random
+import datetime
+import pandas as pd
+def make_dates(year, number_strings):
+    pan = pd.DataFrame(columns=['year', 'mm-dd', 'month', 'day_week'])
+    mas_mmdd = []
+    counter=0
+    while(len(mas_mmdd)!=number_strings):
+        day = random.randint(1, 31)
+        month = random.randint(1, 12)
+        t_day = day if day >= 10 else '0'+str(day)
+        t_month = month if month >=10 else '0'+str(month)
+        mmdd = str(t_month)+'-'+str(t_day)
+        
+        try:
+            mas_mmdd.index(mmdd)
+        except ValueError:
+            try:
+                d = datetime.date(year, month, day)
+                mas_mmdd.append(mmdd)
+                pan.loc[counter] = [year] + [mmdd]+[d.strftime("%b")] + [d.strftime("%A")]
+                counter = counter+1
+            except:
+                pass
+                #print ("Was unreal date: ", year, month, day)
+    return pan
